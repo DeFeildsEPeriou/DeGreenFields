@@ -1,9 +1,16 @@
-let path = require('path');
+const path = require('path');
 const express = require('express');
 const app = express();
 let PORT = process.env.PORT || 3000;
-const bodyparser = require('body-parser');
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+var mongoose = require('mongoose');
+let PORT = process.env.PORT || 3000;
+
+mongoose.connect('mongodb://ericdevin:businessesusersandstuff@ds151059.mlab.com:51059/test-database');
 
 app.use(express.static(path.join(__dirname, '/build')));
 
@@ -14,3 +21,5 @@ app.use(express.static(path.join(__dirname, '/build')));
 app.listen(PORT, function() {
   console.log('listening on 3000')
 })
+
+module.exports = app;
