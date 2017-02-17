@@ -1,19 +1,15 @@
-let path = require('path');
 const express = require('express');
+const mongoose = require('mongoose');
+
 const app = express();
-const bodyParser = require('body-parser');
-const path = require('path')
-let PORT = process.env.PORT || 3000;
-const bodyparser = require('body-parser');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+require('dotenv').config();
+require('./server/middleware.js')(app, express);
+require('./server/routes.js')(app, express);
 
+const PORT = process.env.PORT || 3000;
 
-app.use(express.static(__dirname + '/build'));
-
-
-app.use(express.static(path.join(__dirname, '/build')));
+mongoose.connect(process.env.MONGO_KEY);
 
 
 app.post('/login', (err,succes)=>{
@@ -24,6 +20,9 @@ app.post('/login', (err,succes)=>{
   }
 });
 
-app.listen(PORT, function() {
+
+app.listen(PORT, () => {
   console.log('listening on 3000')
-})
+});
+
+module.exports = app;
