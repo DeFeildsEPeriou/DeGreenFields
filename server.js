@@ -1,16 +1,16 @@
-let path = require('path');
 const express = require('express');
+const mongoose = require('mongoose');
+
 const app = express();
-let PORT = process.env.PORT || 3000;
-const bodyparser = require('body-parser');
+const PORT = process.env.PORT || 3000;
 
+require('./server/middleware.js')(app, express);
+require('./server/routes.js')(app, express);
 
-app.use(express.static(path.join(__dirname, '/build')));
+mongoose.connect('mongodb://ericdevin:businessusersstuff@ds153659.mlab.com:53659/whatshappenin');
 
-
-
-
-
-app.listen(PORT, function() {
+app.listen(PORT, () => {
   console.log('listening on 3000')
-})
+});
+
+module.exports = app;
