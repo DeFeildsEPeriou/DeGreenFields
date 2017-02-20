@@ -25,7 +25,9 @@ module.exports = {
 
   postEvent: (req, res, next) => {
     const body = req.body;
-    const tags = body.tags ?  body.tags.split(' ') : '';
+
+    const tags = body.tags ? body.tags.split(' ') : '';
+
     postAnEvent({
       username: body.username,
       eventTime: body.eventTime,
@@ -43,8 +45,14 @@ module.exports = {
     .fail(err => err);
   },
 
-  // getUser: (req, res, next) => {
-  //
-  // },
+  getUser: (req, res) => {
+    findUser({
+      username: req.body.username,
+    })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch(err => err);
+  },
 
 };
